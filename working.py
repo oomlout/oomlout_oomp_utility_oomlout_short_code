@@ -65,8 +65,25 @@ def generate(**kwargs):
             print(exc)
     kwargs["details"] = details
 
-    if details != {}:        
-        print(f"    generating for {directory_absolute}")
+    if details != {} and details != None:                
+        #import from this folder
+        # impotoomp_word from this files directory even if that isn't the cwd
+        import sys
+        sys.path.append(os.path.dirname(__file__))
+        import oomlout_short_code
+        
+        ##### process aprt here
+        oomlout_short_code = oomlout_short_code.get_oomlout_short_code(details)
+        if oomlout_short_code != "":
+            print(f"    generating for {directory_absolute}")
+            print(f"        oomlout_short_code: {oomlout_short_code}")
+            details["oomlout_short_code"] = oomlout_short_code
+            #write back to yaml file
+            with open(yaml_file, 'w') as outfile:
+                yaml.dump(details, outfile, default_flow_style=False)
+        
+
+
     else:
         print(f"no yaml file found in {directory_absolute}")    
 
