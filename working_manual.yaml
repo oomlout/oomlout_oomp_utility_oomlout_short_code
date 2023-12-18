@@ -1,0 +1,8 @@
+id: oomlout_oomp_utility_oomlout_short_code
+name: "OOMP Utility Oomlout Short Code"
+description: "This is part of OOMP the Oopen Organization Method For Parts. For more details: https://github.com/oomlout/oomp_base  "
+readme_manual: |
+  ## What it does
+  This utility generates a ioomp short code using a set of rules defined in working.py
+  ## Usage
+  * run working.py from within an oomp folder
