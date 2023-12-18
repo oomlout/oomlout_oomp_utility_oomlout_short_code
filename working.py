@@ -72,9 +72,9 @@ def generate(**kwargs):
         sys.path.append(os.path.dirname(__file__))
         import oomlout_short_code
         
-        ##### process aprt here
+        ##### process part here
         oomlout_short_code_result = oomlout_short_code.get_oomlout_short_code(details)
-        if oomlout_short_code != "":
+        if oomlout_short_code_result != "":
             print(f"    generating for {directory_absolute}")
             print(f"        oomlout_short_code: {oomlout_short_code_result}")
             details["oomlout_short_code"] = oomlout_short_code_result
