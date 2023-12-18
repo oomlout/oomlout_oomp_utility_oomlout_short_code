@@ -26,7 +26,7 @@ def main(**kwargs):
     folder = folder.replace("\\","/")
     
     kwargs["configuration"] = configuration
-    print(f"running utility for: {folder}")
+    print(f"running utility oomlout_short_coe for: {folder}")
     create_recursive(**kwargs)
 
 def create_recursive(**kwargs):
@@ -73,11 +73,12 @@ def generate(**kwargs):
         import oomlout_short_code
         
         ##### process aprt here
-        oomlout_short_code = oomlout_short_code.get_oomlout_short_code(details)
+        oomlout_short_code_result = oomlout_short_code.get_oomlout_short_code(details)
         if oomlout_short_code != "":
             print(f"    generating for {directory_absolute}")
-            print(f"        oomlout_short_code: {oomlout_short_code}")
-            details["oomlout_short_code"] = oomlout_short_code
+            print(f"        oomlout_short_code: {oomlout_short_code_result}")
+            details["oomlout_short_code"] = oomlout_short_code_result
+            details["oomlout_short_code_upper"] = oomlout_short_code_result.upper
             #write back to yaml file
             with open(yaml_file, 'w') as outfile:
                 yaml.dump(details, outfile, default_flow_style=False)
