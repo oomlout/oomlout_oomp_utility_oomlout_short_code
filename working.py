@@ -78,7 +78,7 @@ def generate(**kwargs):
             print(f"    generating for {directory_absolute}")
             print(f"        oomlout_short_code: {oomlout_short_code_result}")
             details["oomlout_short_code"] = oomlout_short_code_result
-            details["oomlout_short_code_upper"] = oomlout_short_code_result.upper
+            details["oomlout_short_code_upper"] = oomlout_short_code_result.upper()
             #write back to yaml file
             with open(yaml_file, 'w') as outfile:
                 yaml.dump(details, outfile, default_flow_style=False)

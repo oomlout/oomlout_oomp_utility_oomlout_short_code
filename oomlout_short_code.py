@@ -10,10 +10,17 @@ def get_oomlout_short_code(details):
         if deet in details:
             deets[deet] = details[deet]
     
-    # get for screw
+    # get for screw bolt set screw
+    match = deets["type"].startswith("bolt")
+    if match:
+        oomlout_short_code = match_screw(details, deets)
     match = deets["type"].startswith("screw_")
     if match:
         oomlout_short_code = match_screw(details, deets)
+    match = deets["type"].startswith("set_screw")
+    if match:
+        oomlout_short_code = match_screw(details, deets)
+    
 
 
     return oomlout_short_code
@@ -22,9 +29,18 @@ def get_oomlout_short_code(details):
 def match_screw(details, deets):
     oomlout_short_code = ""
     ## type
+    
+    typ_source = deets["type"]
+    typ_match = []
+    typ_match.append(["bolt","b"])
+    typ_match.append(["screw_socket_cap","sc"])
+    typ_match.append(["screw_countersunk","cs"])
+    typ_match.append(["set_screw","ss"])
+    
     typ = ""
-    if deets["type"] == "screw_socket_cap":
-        typ = "sc"
+    for match in typ_match:
+        if match[0] == typ_source:
+            typ = match[1]
 
     size = ""
     color = ""
