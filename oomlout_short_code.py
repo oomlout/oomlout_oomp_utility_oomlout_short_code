@@ -59,7 +59,7 @@ def match_screw(details, deets):
             size = size.replace("_mm_od","")
         else:
             size = deets["size"].replace("_mm","")
-            size.replace("_","d") # deal with decimal points
+            size = size.replace("_","d") # deal with decimal points
         
         #color
         color_source = deets["color"]
