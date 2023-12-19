@@ -12,15 +12,18 @@ def get_oomlout_short_code(details):
                 deets[deet] = details[deet]
         
         # get for screw bolt set screw
-        match = deets["type"].startswith("bolt")
-        if match:
-            oomlout_short_code = match_screw(details, deets)
-        match = deets["type"].startswith("screw_")
-        if match:
-            oomlout_short_code = match_screw(details, deets)
-        match = deets["type"].startswith("set_screw")
-        if match:
-            oomlout_short_code = match_screw(details, deets)
+        match_list = []
+        match_list.append("bolt")
+        match_list.append("screw_")
+        match_list.append("set_screw")
+        match_list.append("spacer")
+
+        for match in match_list:
+            if deets["type"].startswith(match):
+                oomlout_short_code = match_screw(details, deets)
+                
+
+        
     
 
 
@@ -38,6 +41,7 @@ def match_screw(details, deets):
     typ_match.append(["screw_socket_cap","sc"])
     typ_match.append(["screw_countersunk","cs"])
     typ_match.append(["set_screw","ss"])
+    typ_match.append(["spacer","sp"])
     
     typ = ""
     for match in typ_match:
@@ -48,14 +52,21 @@ def match_screw(details, deets):
     color = ""
     if typ != "":
         #size
-        size = deets["size"].replace("_mm","")
-        size.replace("_","d") # deal with decimal points
+        size = deets["size"]
+        if "mm_id" in size:
+            size = size.replace("_mm_id","x")
+            size = size.replace("_mm_od","")
+        else:
+            size = deets["size"].replace("_mm","")
+            size.replace("_","d") # deal with decimal points
         
         #color
         color_source = deets["color"]
         color_match = []
+        color_match.append(["nylon_black","b"])
         color_match.append(["black","b"])
         color_match.append(["stainless","s"])
+        color_match.append(["nylon_white","w"])
         color_match.append(["gold","g"])
         color = "m"
         for match in color_match:
