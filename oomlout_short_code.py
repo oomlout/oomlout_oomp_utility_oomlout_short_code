@@ -40,6 +40,7 @@ def match_screw(details, deets):
     typ_match.append(["screw_machine_screw","ms"])
     typ_match.append(["screw_socket_cap","sc"])
     typ_match.append(["screw_countersunk","cs"])
+    typ_match.append(["screw_flat_head","fh"])
     typ_match.append(["set_screw","ss"])
     typ_match.append(["spacer","sp"])
     
@@ -54,7 +55,7 @@ def match_screw(details, deets):
         #size
         size = deets["size"]
         if "mm_id" in size:
-            size = size.replace("_mm_id","x")
+            size = size.replace("_mm_id_","x")
             size = size.replace("_mm_od","")
         else:
             size = deets["size"].replace("_mm","")
