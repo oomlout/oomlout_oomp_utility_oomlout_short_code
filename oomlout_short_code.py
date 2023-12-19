@@ -33,6 +33,7 @@ def match_screw(details, deets):
     typ_source = deets["type"]
     typ_match = []
     typ_match.append(["bolt","b"])
+    typ_match.append(["screw_machine_screw","ms"])
     typ_match.append(["screw_socket_cap","sc"])
     typ_match.append(["screw_countersunk","cs"])
     typ_match.append(["set_screw","ss"])
@@ -53,7 +54,7 @@ def match_screw(details, deets):
         color_source = deets["color"]
         color_match = []
         color_match.append(["black","b"])
-        color_match.append(["silver","s"])
+        color_match.append(["stainless","s"])
         color_match.append(["gold","g"])
         color = "m"
         for match in color_match:
@@ -67,8 +68,9 @@ def match_screw(details, deets):
         # head
         head_source = deets["description_extra"]
         head_match = []
-        head_match.append(["flat","f"])
-        head_match.append(["phillips","p"])
+        head_match.append(["flat_head","f"])
+        head_match.append(["phillips_head","pz"])
+        head_match.append(["pozidrive_head","p"])
         head_match.append(["hex_head","h"])
         head = ""
         for match in head_match:
