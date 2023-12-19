@@ -6,20 +6,21 @@ def get_oomlout_short_code(details):
     oomlout_short_code = ""
     deets_order = ["classification", "type", "size", "color", "description_main", "description_extra", "manufacturer", "part_number"]
     deets = {}
-    for deet in deets_order:
-        if deet in details:
-            deets[deet] = details[deet]
-    
-    # get for screw bolt set screw
-    match = deets["type"].startswith("bolt")
-    if match:
-        oomlout_short_code = match_screw(details, deets)
-    match = deets["type"].startswith("screw_")
-    if match:
-        oomlout_short_code = match_screw(details, deets)
-    match = deets["type"].startswith("set_screw")
-    if match:
-        oomlout_short_code = match_screw(details, deets)
+    if details != None:
+        for deet in deets_order:
+            if deet in details:
+                deets[deet] = details[deet]
+        
+        # get for screw bolt set screw
+        match = deets["type"].startswith("bolt")
+        if match:
+            oomlout_short_code = match_screw(details, deets)
+        match = deets["type"].startswith("screw_")
+        if match:
+            oomlout_short_code = match_screw(details, deets)
+        match = deets["type"].startswith("set_screw")
+        if match:
+            oomlout_short_code = match_screw(details, deets)
     
 
 
