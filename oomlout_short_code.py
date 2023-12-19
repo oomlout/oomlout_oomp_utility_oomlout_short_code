@@ -69,8 +69,8 @@ def match_screw(details, deets):
         head_source = deets["description_extra"]
         head_match = []
         head_match.append(["flat_head","f"])
-        head_match.append(["phillips_head","pz"])
-        head_match.append(["pozidrive_head","p"])
+        head_match.append(["phillips_head","p"])
+        head_match.append(["pozidrive_head","pz"])
         head_match.append(["hex_head","h"])
         head = ""
         for match in head_match:
