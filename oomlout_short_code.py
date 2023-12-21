@@ -55,11 +55,16 @@ def match_screw(details, deets):
         #size
         size = deets["size"]
         if "mm_id" in size:
-            size = size.replace("_mm_id_","x")
+            size = size.replace("_id_","x")
             size = size.replace("_mm_od","")
+            pass
         else:
             size = deets["size"].replace("_mm","")
             size = size.replace("_","d") # deal with decimal points
+
+        #if size i m and a number remove the m
+        if size.startswith("m") and size[1].isdigit():
+            size = size[1:]
         
         #color
         color_source = deets["color"]
