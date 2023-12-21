@@ -76,7 +76,7 @@ def match_screw(details, deets):
 
         # length
         length = deets["description_main"]
-        length = length.replace("_mm","")
+        length = length.replace("_mm_length","").replace("_mm","")
 
         # head
         head_source = deets["description_extra"]
