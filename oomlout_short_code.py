@@ -54,7 +54,7 @@ def match_screw(details, deets):
     if typ != "":
         #size
         size = deets["size"]
-        if "mm_id" in size:
+        if typ_source == "spacer":
             size = size.replace("_id_","x")
             size = size.replace("_mm_od","")
             pass
