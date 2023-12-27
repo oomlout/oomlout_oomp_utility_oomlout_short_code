@@ -10,6 +10,14 @@ def get_oomlout_short_code(details):
         for deet in deets_order:
             if deet in details:
                 deets[deet] = details[deet]
+
+        #get bearing short_code
+        match_list = []
+        match_list.append("bearing")
+
+        for match in match_list:
+            if deets["type"].startswith(match):
+                oomlout_short_code = match_bearing(details, deets)
         
         # get for screw bolt set screw
         match_list = []
@@ -21,11 +29,37 @@ def get_oomlout_short_code(details):
         for match in match_list:
             if deets["type"].startswith(match):
                 oomlout_short_code = match_screw(details, deets)
+
                 
 
         
     
 
+
+    return oomlout_short_code
+
+def match_bearing(details, deets):
+    oomlout_short_code = ""
+    ## type
+    
+    typ_source = deets["type"]
+    typ_match = []
+    typ_match.append(["bolt","b"])
+    typ_match.append(["screw_machine_screw","ms"])
+    typ_match.append(["screw_socket_cap","sc"])
+    typ_match.append(["screw_countersunk","cs"])
+    typ_match.append(["screw_flat_head","fh"])    
+    typ_match.append(["set_screw","ss"])
+    typ_match.append(["screw_self_tapping","st"])
+    typ_match.append(["screw_thread_forming","tf"])
+    typ_match.append(["spacer","sp"])
+    
+    typ = "bear"
+    
+    size = deets["size"].replace("_size","")
+
+
+    oomlout_short_code = f"{typ}{size}"
 
     return oomlout_short_code
 
@@ -40,8 +74,10 @@ def match_screw(details, deets):
     typ_match.append(["screw_machine_screw","ms"])
     typ_match.append(["screw_socket_cap","sc"])
     typ_match.append(["screw_countersunk","cs"])
-    typ_match.append(["screw_flat_head","fh"])
+    typ_match.append(["screw_flat_head","fh"])    
     typ_match.append(["set_screw","ss"])
+    typ_match.append(["screw_self_tapping","st"])
+    typ_match.append(["screw_thread_forming","tf"])
     typ_match.append(["spacer","sp"])
     
     typ = ""
