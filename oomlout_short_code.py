@@ -56,7 +56,7 @@ def match_bearing(details, deets):
     
     typ = "br"
     
-    color = deets["color"].replace("_size","")
+    color = deets["color"].replace("_size","").replace("_","")
 
 
     oomlout_short_code = f"{typ}{color}"
