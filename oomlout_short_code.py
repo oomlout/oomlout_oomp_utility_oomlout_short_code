@@ -54,7 +54,7 @@ def match_bearing(details, deets):
     typ_match.append(["screw_thread_forming","tf"])
     typ_match.append(["spacer","sp"])
     
-    typ = "bear"
+    typ = "br"
     
     color = deets["color"].replace("_size","")
 
