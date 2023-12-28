@@ -11,7 +11,8 @@ def get_oomlout_short_code(details):
             if deet in details:
                 deets[deet] = details[deet]
 
-        #get bearing short_code
+        #bearing
+                
         match_list = []
         match_list.append("bearing")
 
@@ -19,7 +20,19 @@ def get_oomlout_short_code(details):
             if deets["type"].startswith(match):
                 oomlout_short_code = match_bearing(details, deets)
         
-        # get for screw bolt set screw
+
+        # packaging
+        match_list = []
+        match_list.append("packaging")
+
+        for match in match_list:
+            if deets["type"].startswith(match):
+                oomlout_short_code = match_packaging(details, deets)
+
+        # screw
+        # bolt
+        # set screw
+        # spacer
         match_list = []
         match_list.append("bolt")
         match_list.append("screw_")
@@ -42,18 +55,6 @@ def match_bearing(details, deets):
     oomlout_short_code = ""
     ## type
     
-    typ_source = deets["type"]
-    typ_match = []
-    typ_match.append(["bolt","b"])
-    typ_match.append(["screw_machine_screw","ms"])
-    typ_match.append(["screw_socket_cap","sc"])
-    typ_match.append(["screw_countersunk","cs"])
-    typ_match.append(["screw_flat_head","fh"])    
-    typ_match.append(["set_screw","ss"])
-    typ_match.append(["screw_self_tapping","st"])
-    typ_match.append(["screw_thread_forming","tf"])
-    typ_match.append(["spacer","sp"])
-    
     typ = "br"
     
     color = deets["color"].replace("_size","").replace("_","")
@@ -63,6 +64,47 @@ def match_bearing(details, deets):
 
     return oomlout_short_code
 
+
+def match_packaging(details, deets):
+    oomlout_short_code = ""
+
+    oomlout_short_code = ""
+    ## type
+    
+    typ_source = deets["type"]
+    typ_match = []
+    typ_match.append(["takeaway_container_circle","tcc"])
+    typ_match.append(["takeaway_container_rectangle","tcr"])
+    
+    typ = ""
+    for match in typ_match:
+        if match[0] == typ_source:
+            typ = match[1]
+
+    
+    size = ""
+    size_source = deets["size"]
+    size = size_source.replace("_ml","")
+
+    description_main = ""
+    description_main_source = deets["description_main"]
+    description_main_match = []
+    description_main_match.append(["hinged_lid","hl"])
+
+    for match in description_main_match:
+        if match[0] == description_main_source:
+            description_main = match[1]
+
+    oomlout_short_code = f"{typ}{size}{description_main}"
+
+    return oomlout_short_code
+
+
+
+
+
+
+    return oomlout_short_code
 
 def match_screw(details, deets):
     oomlout_short_code = ""
