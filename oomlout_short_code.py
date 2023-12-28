@@ -23,7 +23,7 @@ def get_oomlout_short_code(details):
 
         # packaging
         match_list = []
-        match_list.append("packaging")
+        match_list.append("takeaway")
 
         for match in match_list:
             if deets["type"].startswith(match):
