@@ -95,7 +95,9 @@ def match_packaging(details, deets):
         if match[0] == description_main_source:
             description_main = match[1]
 
-    oomlout_short_code = f"{typ}{size}{description_main}"
+
+    if typ != "":
+        oomlout_short_code = f"{typ}{size}{description_main}"
 
     return oomlout_short_code
 
