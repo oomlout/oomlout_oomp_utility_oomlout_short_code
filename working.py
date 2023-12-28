@@ -35,6 +35,7 @@ def create_recursive(**kwargs):
     filter = kwargs.get("filter", "")
     #if folder exists
     if os.path.exists(folder):        
+        count = 0
         for item in os.listdir(folder):
             if filter in item:
                 directory_absolute = os.path.join(folder, item)
@@ -44,6 +45,9 @@ def create_recursive(**kwargs):
                     if os.path.exists(os.path.join(directory_absolute, "working.yaml")):
                         kwargs["directory_absolute"] = directory_absolute
                         create(**kwargs)
+                        count += 1
+                        if count > 100:
+                            print(f"    {count} parts generated")
     else:
         print(f"no folder found at {folder}")
 
@@ -77,8 +81,8 @@ def generate(**kwargs):
         ##### process part here
         oomlout_short_code_result = oomlout_short_code.get_oomlout_short_code(details)
         if oomlout_short_code_result != "":
-            print(f"    generating for {directory_absolute}")
-            print(f"        oomlout_short_code: {oomlout_short_code_result}")
+            #print(f"    generating for {directory_absolute}")
+            #print(f"        oomlout_short_code: {oomlout_short_code_result}")
             details["oomlout_short_code"] = oomlout_short_code_result
             details["oomlout_short_code_upper"] = oomlout_short_code_result.upper()
             #write back to yaml file
