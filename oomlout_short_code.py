@@ -38,6 +38,7 @@ def get_oomlout_short_code(details):
         match_list.append("screw_")
         match_list.append("set_screw")
         match_list.append("spacer")
+        match_list.append("standoff")
 
         for match in match_list:
             if deets["type"].startswith(match):
@@ -123,6 +124,7 @@ def match_screw(details, deets):
     typ_match.append(["screw_self_tapping","st"])
     typ_match.append(["screw_thread_forming","tf"])
     typ_match.append(["spacer","sp"])
+    typ_match.append(["standoff","so"])
     
     typ = ""
     for match in typ_match:
@@ -149,10 +151,10 @@ def match_screw(details, deets):
         #color
         color_source = deets["color"]
         color_match = []
-        color_match.append(["nylon_black","b"])
+        color_match.append(["nylon_black","nb"])
         color_match.append(["black","b"])
         color_match.append(["stainless","s"])
-        color_match.append(["nylon_white","w"])
+        color_match.append(["nylon_white","nw"])
         color_match.append(["gold","g"])
         color = "m"
         for match in color_match:
