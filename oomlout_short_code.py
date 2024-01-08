@@ -153,6 +153,7 @@ def match_screw(details, deets):
         color_match = []
         color_match.append(["nylon_black","nb"])
         color_match.append(["black","b"])
+        color_match.append(["brass","br"])
         color_match.append(["stainless","s"])
         color_match.append(["nylon_white","nw"])
         color_match.append(["gold","g"])
@@ -172,6 +173,10 @@ def match_screw(details, deets):
         head_match.append(["phillips_head","p"])
         head_match.append(["pozidrive_head","pz"])
         head_match.append(["hex_head","h"])
+        head_match.append(["nut_and_nut","nn"])
+        head_match.append(["screw_and_nut","sn"])
+        head_match.append(["screw_and_screw","ss"])
+
         head = ""
         for match in head_match:
             if match[0] == head_source:
