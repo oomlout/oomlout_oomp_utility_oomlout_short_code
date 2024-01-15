@@ -20,6 +20,14 @@ def get_oomlout_short_code(details):
             if deets["type"].startswith(match):
                 oomlout_short_code = match_bearing(details, deets)
         
+        # nut
+        match_list = []
+        match_list.append("nut")
+
+        for match in match_list:
+            if deets["type"].startswith(match):
+                oomlout_short_code = match_nut(details, deets)
+
 
         # packaging
         match_list = []
@@ -105,9 +113,57 @@ def match_packaging(details, deets):
 
 
 
+def match_nut(details, deets):
+    oomlout_short_code = ""
+    ## type
+    
+    typ_source = deets["type"]
+    typ_match = []
+    typ_match.append(["nut","n"])
+    
+    typ = ""
+    for match in typ_match:
+        if match[0] == typ_source:
+            typ = match[1]
 
+    size = ""
+    color = ""
+    if typ != "":
+        #size                
+        size = deets["size"].replace("_mm","")
+        size = size.replace("_","d") # deal with decimal points
+
+        
+        #color
+        color_source = deets["color"]
+        color_match = []
+        color_match.append(["nylon_black","nb"])
+        color_match.append(["black","b"])
+        color_match.append(["brass","br"])
+        color_match.append(["stainless","s"])
+        color_match.append(["nylon_white","nw"])
+        color_match.append(["gold","g"])
+        color = "m"
+        for match in color_match:
+            if match[0] == color_source:
+                color = match[1]
+
+    description_main = ""
+    description_main_source = deets["description_main"]
+    description_main_match = []
+    description_main_match.append(["flanged","fl"])
+    description_main_match.append(["locking","lo"])
+
+    for match in description_main_match:
+        if match[0] == description_main_source:
+            description_main = match[1]
+        
+        oomlout_short_code = f"{typ}{size}{color}{description_main}"
 
     return oomlout_short_code
+
+
+    
 
 def match_screw(details, deets):
     oomlout_short_code = ""
