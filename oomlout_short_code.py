@@ -130,7 +130,7 @@ def match_nut(details, deets):
     color = ""
     if typ != "":
         #size                
-        size = deets["size"].replace("_mm","")
+        size = deets["size"].replace("_mm","").replace("m","")
         size = size.replace("_","d") # deal with decimal points
 
         
@@ -143,7 +143,7 @@ def match_nut(details, deets):
         color_match.append(["stainless","s"])
         color_match.append(["nylon_white","nw"])
         color_match.append(["gold","g"])
-        color = "m"
+        #color = "m"
         for match in color_match:
             if match[0] == color_source:
                 color = match[1]
@@ -197,7 +197,7 @@ def match_screw(details, deets):
             size = size.replace("_mm_od","")
             pass
         else:
-            size = deets["size"].replace("_mm","")
+            size = deets["size"].replace("_mm","").replace("m","")
             size = size.replace("_","d") # deal with decimal points
 
         #if size i m and a number remove the m
@@ -213,7 +213,7 @@ def match_screw(details, deets):
         color_match.append(["stainless","s"])
         color_match.append(["nylon_white","nw"])
         color_match.append(["gold","g"])
-        color = "m"
+        #color = "m"
         for match in color_match:
             if match[0] == color_source:
                 color = match[1]
