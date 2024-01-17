@@ -143,7 +143,7 @@ def match_nut(details, deets):
         color_match.append(["stainless","s"])
         color_match.append(["nylon_white","nw"])
         color_match.append(["gold","g"])
-        #color = "m"
+        color = "m"
         for match in color_match:
             if match[0] == color_source:
                 color = match[1]
@@ -213,7 +213,7 @@ def match_screw(details, deets):
         color_match.append(["stainless","s"])
         color_match.append(["nylon_white","nw"])
         color_match.append(["gold","g"])
-        #color = "m"
+        color = "m"
         for match in color_match:
             if match[0] == color_source:
                 color = match[1]
