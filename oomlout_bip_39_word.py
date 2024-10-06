@@ -1,7 +1,13 @@
-
+import sys
+import os
 
 def get_bip_39_word(details):
     file_word_list = "source\\bip_39_wordlist.txt"
+    # if file_word_list doesn't exist
+    if not os.path.exists(file_word_list):
+        # find the base path if this file
+        base_path = os.path.dirname(__file__)
+        file_word_list = os.path.join(base_path, file_word_list)
     #load word list into an array strip white space and new line
     word_list = []
     with open(file_word_list, 'r') as file:

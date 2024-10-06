@@ -1,7 +1,7 @@
 import os
 import yaml
 import glob
-import oomlout_bip_39_word
+
 
 folder_configuration = "configuration"
 folder_configuration = os.path.join(os.path.dirname(__file__), folder_configuration)
@@ -78,6 +78,7 @@ def generate(**kwargs):
         import sys
         sys.path.append(os.path.dirname(__file__))
         import oomlout_short_code
+        import oomlout_bip_39_word
         
         if True:
             ##### process part here
