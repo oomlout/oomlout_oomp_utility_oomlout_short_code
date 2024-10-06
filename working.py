@@ -1,6 +1,7 @@
 import os
 import yaml
 import glob
+import oomlout_bip_39_word
 
 folder_configuration = "configuration"
 folder_configuration = os.path.join(os.path.dirname(__file__), folder_configuration)
@@ -78,17 +79,31 @@ def generate(**kwargs):
         sys.path.append(os.path.dirname(__file__))
         import oomlout_short_code
         
-        ##### process part here
-        oomlout_short_code_result = oomlout_short_code.get_oomlout_short_code(details)
-        if oomlout_short_code_result != "":
-            #print(f"    generating for {directory_absolute}")
-            #print(f"        oomlout_short_code: {oomlout_short_code_result}")
-            details["oomlout_short_code"] = oomlout_short_code_result
-            details["oomlout_short_code_upper"] = oomlout_short_code_result.upper()
+        if True:
+            ##### process part here
+            oomlout_short_code_result = oomlout_short_code.get_oomlout_short_code(details)
+            if oomlout_short_code_result != "":
+                #print(f"    generating for {directory_absolute}")
+                #print(f"        oomlout_short_code: {oomlout_short_code_result}")
+                details["oomlout_short_code"] = oomlout_short_code_result
+                details["oomlout_short_code_upper"] = oomlout_short_code_result.upper()
+                #write back to yaml file
+                with open(yaml_file, 'w') as outfile:
+                    yaml.dump(details, outfile, default_flow_style=False)
+        
+        ###### add bip 39 word combos
+        bip_39_word = oomlout_bip_39_word.get_bip_39_word(details)
+        if bip_39_word != []:
+            for i in range(0,len(bip_39_word)):
+                details[f"bip_39_word_space_{i}"] = bip_39_word[i]
+                if i > 0:
+                    details[f"bip_39_word_new_line{i}"] = bip_39_word[i].replace(" ","\n")
+                    details[f"bip_39_word_new_br{i}"] = bip_39_word[i].replace(" ","<br>")
+            
             #write back to yaml file
             with open(yaml_file, 'w') as outfile:
                 yaml.dump(details, outfile, default_flow_style=False)
-        
+
 
 
     else:
