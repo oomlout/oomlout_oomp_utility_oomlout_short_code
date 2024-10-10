@@ -98,8 +98,8 @@ def generate(**kwargs):
             for i in range(0,len(bip_39_word)):
                 details[f"bip_39_word_space_{i}"] = bip_39_word[i]
                 if i > 0:
-                    details[f"bip_39_word_new_line{i}"] = bip_39_word[i].replace(" ","\n")
-                    details[f"bip_39_word_new_br{i}"] = bip_39_word[i].replace(" ","<br>")
+                    details[f"bip_39_word_new_line_{i}"] = bip_39_word[i].replace(" ","\n")
+                    details[f"bip_39_word_new_br_{i}"] = bip_39_word[i].replace(" ","<br>")
                     details[f"bip_39_word_no_space_{i}"] = bip_39_word[i].replace(" ","")
 
             
