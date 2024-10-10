@@ -100,6 +100,8 @@ def generate(**kwargs):
                 if i > 0:
                     details[f"bip_39_word_new_line{i}"] = bip_39_word[i].replace(" ","\n")
                     details[f"bip_39_word_new_br{i}"] = bip_39_word[i].replace(" ","<br>")
+                    details[f"bip_39_word_no_space_{i}"] = bip_39_word[i].replace(" ","")
+
             
             #write back to yaml file
             with open(yaml_file, 'w') as outfile:
