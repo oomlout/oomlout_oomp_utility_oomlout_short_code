@@ -101,6 +101,9 @@ def generate(**kwargs):
                     details[f"bip_39_word_new_line_{i}"] = bip_39_word[i].replace(" ","\n")
                     details[f"bip_39_word_new_br_{i}"] = bip_39_word[i].replace(" ","<br>")
                     details[f"bip_39_word_no_space_{i}"] = bip_39_word[i].replace(" ","")
+                    details[f"bip_39_word_underscore_{i}"] = bip_39_word[i].replace(" ","_")
+                    details[f"bip_39_word_dash_{i}"] = bip_39_word[i].replace(" ","-")
+
 
             
             #write back to yaml file
