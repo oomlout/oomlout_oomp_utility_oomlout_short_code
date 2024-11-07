@@ -154,6 +154,7 @@ def match_nut(details, deets):
     description_main_match = []
     description_main_match.append(["flanged","fl"])
     description_main_match.append(["locking","lo"])
+    description_main_match.append(["coupling","co"])
 
     for match in description_main_match:
         if match[0] == description_main_source:
