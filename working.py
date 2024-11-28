@@ -12,7 +12,7 @@ if not os.path.exists(file_configuration):
     file_configuration = os.path.join(folder_configuration, "configuration_default.yaml")
 
 
-
+cnt_short = 1
 #import configuration
 configuration = {}
 with open(file_configuration, 'r') as stream:
@@ -35,22 +35,46 @@ def create_recursive(**kwargs):
     kwargs["folder"] = folder
     filter = kwargs.get("filter", "")
     #if folder exists
-    if os.path.exists(folder):        
-        count = 0
-        for item in os.listdir(folder):
-            if filter in item:
-                directory_absolute = os.path.join(folder, item)
-                directory_absolute = directory_absolute.replace("\\","/")
-                if os.path.isdir(directory_absolute):
-                    #if working.yaml exists in the folder
-                    if os.path.exists(os.path.join(directory_absolute, "working.yaml")):
-                        kwargs["directory_absolute"] = directory_absolute
-                        create(**kwargs)
-                        count += 1
-                        if count % 100 == 0:
-                            print(f"    {count} parts generated")
+    import threading
+    semaphore = threading.Semaphore(1000)
+    threads = []
+
+    def create_thread(item, **kwargs):
+        with semaphore:
+            create_recursive_thread(item, **kwargs)
+    
+    for item in os.listdir(folder):
+        kwargs["filter"] = filter
+        kwargs["folder"] = folder
+        kwargs["item"] = item
+        thread = threading.Thread(target=create_thread, args=(item,), kwargs=kwargs)
+        threads.append(thread)
+        thread.start()
+    for thread in threads:
+        thread.join()
+            
+            
+            
+            
+def create_recursive_thread(**kwargs):      
+    global cnt_short      
+    filter = kwargs.get("filter", "")
+    folder = kwargs.get("folder","")
+    item = kwargs.get("item", "")
+    if filter in item:
+        directory_absolute = os.path.join(folder, item)
+        directory_absolute = directory_absolute.replace("\\","/")
+        if os.path.isdir(directory_absolute):
+            #if working.yaml exists in the folder
+            if os.path.exists(os.path.join(directory_absolute, "working.yaml")):
+                kwargs["directory_absolute"] = directory_absolute
+                create(**kwargs)
+                cnt_short += 1
+                if cnt_short % 100 == 0:
+                    print(f".", end="")
     else:
-        print(f"no folder found at {folder}")
+        #print(f"no folder found at {folder}")
+        pass
 
 def create(**kwargs):
     directory_absolute = kwargs.get("directory_absolute", os.getcwd())    
