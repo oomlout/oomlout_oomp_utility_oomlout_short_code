@@ -36,18 +36,18 @@ def create_recursive(**kwargs):
     filter = kwargs.get("filter", "")
     #if folder exists
     import threading
-    semaphore = threading.Semaphore(1000)
+    semaphore = threading.Semaphore(300)
     threads = []
 
-    def create_thread(item, **kwargs):
+    def create_thread(**kwargs):
         with semaphore:
-            create_recursive_thread(item, **kwargs)
+            create_recursive_thread(**kwargs)
     
     for item in os.listdir(folder):
         kwargs["filter"] = filter
         kwargs["folder"] = folder
         kwargs["item"] = item
-        thread = threading.Thread(target=create_thread, args=(item,), kwargs=kwargs)
+        thread = threading.Thread(target=create_thread, kwargs=kwargs)
         threads.append(thread)
         thread.start()
     for thread in threads:
