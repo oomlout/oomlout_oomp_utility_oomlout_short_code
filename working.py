@@ -1,7 +1,7 @@
 import os
 import yaml
 import glob
-
+import copy
 
 folder_configuration = "configuration"
 folder_configuration = os.path.join(os.path.dirname(__file__), folder_configuration)
@@ -47,7 +47,7 @@ def create_recursive(**kwargs):
         kwargs["filter"] = filter
         kwargs["folder"] = folder
         kwargs["item"] = item
-        thread = threading.Thread(target=create_thread, kwargs=kwargs)
+        thread = threading.Thread(target=create_thread, kwargs=copy.deepcopy(kwargs))
         threads.append(thread)
         thread.start()
     for thread in threads:

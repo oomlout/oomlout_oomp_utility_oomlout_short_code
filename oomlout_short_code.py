@@ -16,8 +16,10 @@ def get_oomlout_short_code(details):
         match_list = []
         match_list.append("bearing")
 
+        typ = deets.get("type","")
+
         for match in match_list:
-            if deets["type"].startswith(match):
+            if typ.startswith(match):
                 oomlout_short_code = match_bearing(details, deets)
         
         # nut
@@ -25,7 +27,7 @@ def get_oomlout_short_code(details):
         match_list.append("nut")
 
         for match in match_list:
-            if deets["type"].startswith(match):
+            if typ.startswith(match):
                 oomlout_short_code = match_nut(details, deets)
 
 
@@ -34,7 +36,7 @@ def get_oomlout_short_code(details):
         match_list.append("takeaway")
 
         for match in match_list:
-            if deets["type"].startswith(match):
+            if typ.startswith(match):
                 oomlout_short_code = match_packaging(details, deets)
 
         # screw
@@ -49,7 +51,7 @@ def get_oomlout_short_code(details):
         match_list.append("standoff")
 
         for match in match_list:
-            if deets["type"].startswith(match):
+            if typ.startswith(match):
                 oomlout_short_code = match_screw(details, deets)
 
                 
@@ -66,7 +68,9 @@ def match_bearing(details, deets):
     
     typ = "br"
     
-    color = deets["color"].replace("_size","").replace("_","")
+    color = deets.get("color","")
+
+    color = color.replace("_size","").replace("_","")
 
 
     oomlout_short_code = f"{typ}{color}"
@@ -80,7 +84,7 @@ def match_packaging(details, deets):
     oomlout_short_code = ""
     ## type
     
-    typ_source = deets["type"]
+    typ_source = deets.get("type","")
     typ_match = []
     typ_match.append(["takeaway_container_circle","tcc"])
     typ_match.append(["takeaway_container_rectangle","tcr"])
@@ -92,11 +96,12 @@ def match_packaging(details, deets):
 
     
     size = ""
-    size_source = deets["size"]
+
+    size_source = deets.get("size","")
     size = size_source.replace("_ml","")
 
     description_main = ""
-    description_main_source = deets["description_main"]
+    description_main_source = description_main
     description_main_match = []
     description_main_match.append(["hinged_lid","hl"])
 
@@ -117,7 +122,7 @@ def match_nut(details, deets):
     oomlout_short_code = ""
     ## type
     
-    typ_source = deets["type"]
+    typ_source = deets.get("type","")
     typ_match = []
     typ_match.append(["nut","n"])
     
@@ -129,13 +134,16 @@ def match_nut(details, deets):
     size = ""
     color = ""
     if typ != "":
-        #size                
-        size = deets["size"].replace("_mm","").replace("m","")
+        #size       
+        size = deets.get("size","")         
+        size = size.replace("_mm","").replace("m","")
         size = size.replace("_","d") # deal with decimal points
 
         
+
+
         #color
-        color_source = deets["color"]
+        color_source = deets.get("color","")
         color_match = []
         color_match.append(["nylon_black","nb"])
         color_match.append(["black","b"])
@@ -150,7 +158,8 @@ def match_nut(details, deets):
                 color = match[1]
 
     description_main = ""
-    description_main_source = deets["description_main"]
+    desc_main = deets.get("description_main","")
+    description_main_source = desc_main
     description_main_match = []
     description_main_match.append(["flanged","fl"])
     description_main_match.append(["locking","lo"])
@@ -171,7 +180,7 @@ def match_screw(details, deets):
     oomlout_short_code = ""
     ## type
     
-    typ_source = deets["type"]
+    typ_source = deets.get("type","")
     typ_match = []
     typ_match.append(["bolt","b"])
     typ_match.append(["screw_machine_screw","ms"])
@@ -193,13 +202,14 @@ def match_screw(details, deets):
     color = ""
     if typ != "":
         #size
-        size = deets["size"]
+        size = deets.get("size","")
         if typ_source == "spacer":
             size = size.replace("_id_","x")
             size = size.replace("_mm_od","")
             pass
         else:
-            size = deets["size"].replace("_mm","").replace("m","")
+            size = deets.get("size","")
+            size = size.replace("_mm","").replace("m","")
             size = size.replace("_","d") # deal with decimal points
 
         #if size i m and a number remove the m
@@ -207,7 +217,8 @@ def match_screw(details, deets):
             size = size[1:]
         
         #color
-        color_source = deets["color"]
+        color = deets.get("color","")
+        color_source = color
         color_match = []
         color_match.append(["nylon_black","nb"])
         color_match.append(["black","b"])
@@ -222,11 +233,13 @@ def match_screw(details, deets):
                 color = match[1]
 
         # length
-        length = deets["description_main"]
+        desc_main = deets.get("description_main","")
+        length = desc_main
         length = length.replace("_mm_length","").replace("_mm","")
 
         # head
-        head_source = deets["description_extra"]
+        desc_extra = deets.get("description_extra","")
+        head_source = desc_extra
         head_match = []
         head_match.append(["flat_head","f"])
         head_match.append(["phillips_head","p"])
