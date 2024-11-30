@@ -84,6 +84,7 @@ def create(**kwargs):
     
 
 def generate(**kwargs):    
+    save_file = kwargs.get("save_file", False)
     directory_absolute = kwargs.get("directory_absolute", os.getcwd())
     folder = kwargs.get("folder", os.getcwd())
     yaml_file = os.path.join(directory_absolute, "working.yaml")
@@ -114,8 +115,9 @@ def generate(**kwargs):
                 details["oomlout_short_code"] = oomlout_short_code_result
                 details["oomlout_short_code_upper"] = oomlout_short_code_result.upper()
                 #write back to yaml file
-                with open(yaml_file, 'w') as outfile:
-                    yaml.dump(details, outfile, default_flow_style=False)
+                if save_file:
+                    with open(yaml_file, 'w') as outfile:
+                        yaml.dump(details, outfile, default_flow_style=False)
         
         ###### add bip 39 word combos
         bip_39_word = oomlout_bip_39_word.get_bip_39_word(details)
