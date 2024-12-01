@@ -3,6 +3,7 @@ import yaml
 import glob
 import copy
 import pickle
+import io
 
 folder_configuration = "configuration"
 folder_configuration = os.path.join(os.path.dirname(__file__), folder_configuration)
@@ -37,7 +38,7 @@ def create_recursive(**kwargs):
     filter = kwargs.get("filter", "")
     #if folder exists
     import threading
-    semaphore = threading.Semaphore(300)
+    semaphore = threading.Semaphore(100)
     threads = []
 
     def create_thread(**kwargs):
@@ -84,18 +85,27 @@ def create(**kwargs):
     
 
 def generate(**kwargs):    
-    save_file = kwargs.get("save_file", False)
+    save_file = kwargs.get("save_file", True)
     directory_absolute = kwargs.get("directory_absolute", os.getcwd())
     folder = kwargs.get("folder", os.getcwd())
     yaml_file = os.path.join(directory_absolute, "working.yaml")
     kwargs["yaml_file"] = yaml_file
     #load the yaml file
     details = {}
-    with open(yaml_file, 'r') as stream:
-        try:
-            details = yaml.load(stream, Loader=yaml.FullLoader)
-        except yaml.YAMLError as exc:   
-            print(exc)
+
+    #mode = "open"
+    mode = "buffer"
+
+    if mode == "open":
+        with open(yaml_file, 'r') as stream:
+            try:
+                details = yaml.load(stream, Loader=yaml.FullLoader)
+            except yaml.YAMLError as exc:   
+                print(exc)
+    elif mode == "buffer":
+        with open(yaml_file, 'r') as file:
+            buffer = io.StringIO(file.read())
+            details = yaml.load(buffer, Loader=yaml.FullLoader)
     kwargs["details"] = details
 
     if details != {} and details != None:                
