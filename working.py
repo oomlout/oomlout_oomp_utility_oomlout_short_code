@@ -41,15 +41,18 @@ def create_recursive(**kwargs):
     semaphore = threading.Semaphore(100)
     threads = []
 
-    def create_thread(**kwargs):
+    #def create_thread(**kwargs):
+    def create_thread(item, **kwargs):
         with semaphore:
-            create_recursive_thread(**kwargs)
+            create_recursive_thread(item,**kwargs)
+            #create_recursive_thread(**kwargs)
     
     for item in os.listdir(folder):
         kwargs["filter"] = filter
         kwargs["folder"] = folder
         kwargs["item"] = item
-        thread = threading.Thread(target=create_thread, kwargs=pickle.loads(pickle.dumps(kwargs,-1)))
+        #thread = threading.Thread(target=create_thread, kwargs=pickle.loads(pickle.dumps(kwargs,-1)))
+        thread = threading.Thread(target=create_thread, kwargs={"iten":item, **kwargs})
         threads.append(thread)
         thread.start()
     for thread in threads:
@@ -58,19 +61,21 @@ def create_recursive(**kwargs):
             
             
             
-def create_recursive_thread(**kwargs):      
+#def create_recursive_thread(**kwargs):      
+def create_recursive_thread(item, **kwargs):      
     global cnt_short      
     filter = kwargs.get("filter", "")
     folder = kwargs.get("folder","")
-    item = kwargs.get("item", "")
+    #item = kwargs.get("item", "")
     if filter in item:
         directory_absolute = os.path.join(folder, item)
         directory_absolute = directory_absolute.replace("\\","/")
         if os.path.isdir(directory_absolute):
             #if working.yaml exists in the folder
             if os.path.exists(os.path.join(directory_absolute, "working.yaml")):
-                kwargs["directory_absolute"] = directory_absolute
-                create(**kwargs)
+                #kwargs["directory_absolute"] = directory_absolute
+                #create(**kwargs)
+                create(directory_absolute, **kwargs)
                 cnt_short += 1
                 if cnt_short % 100 == 0:
                     print(f".", end="")
@@ -78,23 +83,26 @@ def create_recursive_thread(**kwargs):
         #print(f"no folder found at {folder}")
         pass
 
-def create(**kwargs):
-    directory_absolute = kwargs.get("directory_absolute", os.getcwd())    
-    kwargs["directory_absolute"] = directory_absolute    
-    generate(**kwargs)
+#def create(**kwargs):
+def create(directory_absolute, **kwargs):
+    #directory_absolute = kwargs.get("directory_absolute", os.getcwd())    
+    #kwargs["directory_absolute"] = directory_absolute    
+    #generate(**kwargs)
+    generate(directory_absolute, **kwargs)
     
 
-def generate(**kwargs):    
+#def generate(**kwargs):    
+def generate(directory_absolute, **kwargs):    
     save_file = kwargs.get("save_file", True)
-    directory_absolute = kwargs.get("directory_absolute", os.getcwd())
+    #directory_absolute = kwargs.get("directory_absolute", os.getcwd())
     folder = kwargs.get("folder", os.getcwd())
     yaml_file = os.path.join(directory_absolute, "working.yaml")
     kwargs["yaml_file"] = yaml_file
     #load the yaml file
     details = {}
 
-    #mode = "open"
-    mode = "buffer"
+    mode = "open"
+    #mode = "buffer"
 
     if mode == "open":
         with open(yaml_file, 'r') as stream:
@@ -106,7 +114,7 @@ def generate(**kwargs):
         with open(yaml_file, 'r') as file:
             buffer = io.StringIO(file.read())
             details = yaml.load(buffer, Loader=yaml.FullLoader)
-    kwargs["details"] = details
+    #kwargs["details"] = details
 
     if details != {} and details != None:                
         #import from this folder
@@ -144,8 +152,19 @@ def generate(**kwargs):
 
             
             #write back to yaml file
-            with open(yaml_file, 'w') as outfile:
-                yaml.dump(details, outfile, default_flow_style=False)
+            #mode = "open"
+            mode = "buffer"
+            if mode == "open":
+                with open(yaml_file, 'w') as outfile:
+                    yaml.dump(details, outfile, default_flow_style=False)
+            elif mode == "buffer":
+                import io
+                with open(yaml_file, 'w') as file:
+                    buffer = io.StringIO()
+                    yaml.dump(details, buffer, default_flow_style=False)
+                    file.write(buffer.getvalue())
+                    buffer.close() 
+                    
 
 
 
@@ -160,9 +179,10 @@ if __name__ == '__main__':
     kwargs = {}
     folder = os.path.dirname(__file__)
     #folder = "C:/gh/oomlout_oomp_builder/parts"
-    folder = "C:/gh/oomlout_oomp_part_generation_version_1/parts"
+    #folder = "C:/gh/oomlout_oomp_part_generation_version_1/parts"
     #folder = "C:/gh/oomlout_oobb_version_4/things"
     #folder = "C:/gh/oomlout_oomp_current_version"
+    folder = "Z:\\oomlout_oomp_current_version_fast_test\\parts"
     kwargs["folder"] = folder
     overwrite = False
     kwargs["overwrite"] = overwrite

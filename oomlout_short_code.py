@@ -164,12 +164,24 @@ def match_nut(details, deets):
     description_main_match.append(["flanged","fl"])
     description_main_match.append(["locking","lo"])
     description_main_match.append(["coupling","co"])
+    description_main_match.append(["2020","2"])
 
     for match in description_main_match:
         if match[0] == description_main_source:
             description_main = match[1]
         
-        oomlout_short_code = f"{typ}{size}{color}{description_main}"
+    description_extra = ""
+    desc_extra = deets.get("description_extra","")
+    description_extra_source = desc_extra
+    description_extra_match = []
+    description_extra_match.append(["t_nut","t"])
+    description_extra_match.append(["ball_spring","w"])
+
+    for match in description_extra_match:
+        if match[0] == description_extra_source:
+            description_extra = match[1]
+
+    oomlout_short_code = f"{typ}{size}{color}{description_main}{description_extra}"
 
     return oomlout_short_code
 
