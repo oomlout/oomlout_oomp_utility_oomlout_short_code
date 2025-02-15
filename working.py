@@ -140,7 +140,9 @@ def generate(directory_absolute, **kwargs):
         ###### add bip 39 word combos
         bip_39_word = oomlout_bip_39_word.get_bip_39_word(details)
         if bip_39_word != []:
-            for i in range(0,len(bip_39_word)):
+            #for i in range(0,len(bip_39_word)):
+            bips = [2,3,len(bip_39_word)-1]
+            for i in bips:
                 details[f"bip_39_word_space_{i}"] = bip_39_word[i]
                 if i > 0:
                     details[f"bip_39_word_new_line_{i}"] = bip_39_word[i].replace(" ","\n")
